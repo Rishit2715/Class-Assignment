@@ -1,7 +1,7 @@
 package com.tss.exception;
 
-public class MovieFullException extends RuntimeException {
-    public MovieFullException(String message) {
+public class CapacityFullException extends RuntimeException {
+    public CapacityFullException(String message) {
         super(message);
     }
 
