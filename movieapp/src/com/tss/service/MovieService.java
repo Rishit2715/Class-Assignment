@@ -101,7 +101,6 @@ public class MovieService {
         }
     }
 
-    // Helpers
     private String generateMovieId(String name, String genre, int year) {
         String cleanName = name.replaceAll("\\s+", "");
         String cleanGenre = genre.replaceAll("\\s+", "");
