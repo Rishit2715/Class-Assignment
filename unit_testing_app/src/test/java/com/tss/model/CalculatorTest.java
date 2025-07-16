@@ -2,6 +2,7 @@ package com.tss.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,18 +21,19 @@ class CalculatorTest {
 		System.out.println("testing done");
 	}
 
-//	@Test
-//	void testAddition() {
+	@Test
+	void testAddition() {
 //		assertEquals(5, calculator.addition(3, 2));
-//	}
-//
-//	void testSubtraction() {
-//		assertEquals(1, calculator.subtraction(3, 2));
-//	}
-//
-//	void testMultiplication() {
-//		assertEquals(6, calculator.multiplication(3, 2));
-//	}
+		fail("yrt to implement");
+	}
+
+	void testSubtraction() {
+		assertEquals(1, calculator.subtraction(3, 2));
+	}
+
+	void testMultiplication() {
+		assertEquals(6, calculator.multiplication(3, 2));
+	}
 	@Test
 	void tesdtDivision() {
 		int actualResult = calculator.division(10,0);
