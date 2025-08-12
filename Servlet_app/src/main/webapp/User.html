@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>User Login</title>
+    <style>
+        body {
+            background: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        label {
+            font-size: 14px;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+        input[type="text"], input[type="password"], select {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        button {
+            width: 48%;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-login {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .btn-reset {
+            background-color: #f44336;
+            color: white;
+        }
+       
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>User Login</h2>
+        <form action="SelectController" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="role">Role:</label>
+            <select id="role" name="role">
+                <option value="Admin">Admin</option>
+                <option value="Customer">Customer</option>
+            </select>
+
+            <label for="theme">Theme:</label>
+            <select id="theme" name="theme">
+                <option value="Green">Green</option>
+                <option value="Blue">Blue</option>
+            </select>
+
+            <div class="btn-group">
+                <button type="submit" class="btn-login" name="action" value="login">Login</button>
+                <button type="reset" class="btn-reset">Cancel</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

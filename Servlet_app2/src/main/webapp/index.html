@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz App - Login / Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            padding: 30px;
+        }
+
+        .container {
+            width: 400px;
+            margin: auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .tabs label {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            background: #eee;
+            cursor: pointer;
+            border: 1px solid #ccc;
+        }
+
+        .tabs input[type="radio"] {
+            display: none;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        input#login-tab:checked ~ .tabs label[for="login-tab"],
+        input#register-tab:checked ~ .tabs label[for="register-tab"] {
+            background: #ddd;
+            font-weight: bold;
+        }
+
+        input#login-tab:checked ~ .login-form,
+        input#register-tab:checked ~ .register-form {
+            display: block;
+        }
+
+        form input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 8px;
+            margin-bottom: 16px;
+        }
+
+        form input[type="submit"] {
+            background: #4285f4;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        form input[type="submit"]:hover {
+            background: #3367d6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <input type="radio" id="login-tab" name="tab" checked>
+    <input type="radio" id="register-tab" name="tab">
+
+    <div class="tabs">
+        <label for="login-tab">Login</label>
+        <label for="register-tab">Register</label>
+    </div>
+
+    <!-- Login Form -->
+    <div class="tab-content login-form">
+        <form action="LoginCOntroller" method="post">
+            <label>Username:</label>
+            <input type="text" name="username" required>
+
+            <label>Password:</label>
+            <input type="password" name="password" required>
+
+            <input type="submit" value="Login">
+        </form>
+    </div>
+
+    <!-- Registration Form -->
+    <div class="tab-content register-form">
+        <form action="RegisterController" method="post">
+            <label>Username:</label>
+            <input type="text" name="username" required>
+
+            <label>Password:</label>
+            <input type="password" name="password" required>
+
+            <label>Email:</label>
+            <input type="email" name="email" required>
+
+            <input type="submit" value="Register">
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

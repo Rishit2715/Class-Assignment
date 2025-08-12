@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login & Show Users</title>
+</head>
+<body>
+
+<h2>Login</h2>
+<form action="UserController" method="post">
+  UserName: <input type="text" name="useNameTxt"><br><br>
+  Password: <input type="password" name="passwordTxt"><br><br>
+  <button type="submit" name="action" value="login">Login</button>
+</form>
+
+<hr>
+
+<h2>View All Users</h2>
+<form action="UserController" method="get">
+  <button type="submit">Show All Users</button>
+</form>
+
+</body>
+</html>
