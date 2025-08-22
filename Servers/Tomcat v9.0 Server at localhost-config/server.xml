@@ -152,7 +152,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="Servlet_app" path="/Servlet_app" reloadable="true" source="org.eclipse.jst.jee.server:Servlet_app"/><Context docBase="Quiz" path="/Quiz" reloadable="true" source="org.eclipse.jst.jee.server:Quiz"/><Context docBase="jsp_app" path="/jsp_app" reloadable="true" source="org.eclipse.jst.jee.server:jsp_app"/><Context docBase="Feedback_app" path="/Feedback_app" reloadable="true" source="org.eclipse.jst.jee.server:Feedback_app"/><Context docBase="jstl_app" path="/jstl_app" reloadable="true" source="org.eclipse.jst.jee.server:jstl_app"/></Host>
+      <Context docBase="Servlet_app" path="/Servlet_app" reloadable="true" source="org.eclipse.jst.jee.server:Servlet_app"/><Context docBase="Quiz" path="/Quiz" reloadable="true" source="org.eclipse.jst.jee.server:Quiz"/><Context docBase="jsp_app" path="/jsp_app" reloadable="true" source="org.eclipse.jst.jee.server:jsp_app"/><Context docBase="Feedback_app" path="/Feedback_app" reloadable="true" source="org.eclipse.jst.jee.server:Feedback_app"/><Context docBase="jstl_app" path="/jstl_app" reloadable="true" source="org.eclipse.jst.jee.server:jstl_app"/><Context docBase="Bank_Management" path="/Bank_Management" reloadable="true" source="org.eclipse.jst.jee.server:Bank_Management"/></Host>
     </Engine>
   </Service>
 </Server>
