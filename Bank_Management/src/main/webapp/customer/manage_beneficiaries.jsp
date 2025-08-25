@@ -3,7 +3,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.tss.model.Beneficiary" %>
 <%@ page import="com.tss.model.Account" %>
-
+zwo
 <html>
 <head>
     <title>Manage Beneficiaries</title>

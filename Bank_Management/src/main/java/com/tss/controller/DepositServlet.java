@@ -33,14 +33,14 @@ public class DepositServlet extends HttpServlet {
 
         int custId = (Integer) userIdObj;
         try {
-            // Load approved accounts
             java.util.List<com.tss.model.Account> accounts = accountDAO.getApprovedAccounts(custId);
             request.setAttribute("accounts", accounts);
         } catch (SQLException e) {
             e.printStackTrace();
-            request.setAttribute("error", "Failed to load accounts.");
+            session.setAttribute("flash_error", "Failed to load accounts.");
         }
 
+        // Forward to modal (from dashboard)
         request.getRequestDispatcher("/customer/dashboard.jsp").forward(request, response);
     }
 
@@ -56,7 +56,14 @@ public class DepositServlet extends HttpServlet {
         }
 
         String accNo = request.getParameter("accNo");
-        double amount = Double.parseDouble(request.getParameter("amount"));
+        double amount;
+        try {
+            amount = Double.parseDouble(request.getParameter("amount"));
+        } catch (NumberFormatException e) {
+            session.setAttribute("flash_error", "Invalid amount entered.");
+            response.sendRedirect("dashboard");
+            return;
+        }
         String remarks = request.getParameter("remarks");
 
         Connection conn = null;
@@ -65,7 +72,7 @@ public class DepositServlet extends HttpServlet {
             conn = accountDAO.getConnection();
             conn.setAutoCommit(false);
 
-            // Validate account belongs to user
+            // Validate account
             if (!accountDAO.isAccountOfCustomer(accNo, (Integer) userIdObj)) {
                 throw new IllegalArgumentException("Invalid account selected.");
             }
@@ -81,17 +88,19 @@ public class DepositServlet extends HttpServlet {
 
             // Log transaction
             transactionDAO.insertTransaction(
-                    accNo, 
-                    "deposit", 
-                    amount, 
-                    newBalance,
-                    "Cash Deposit: " + (remarks != null ? remarks : "No remarks"),
-                    null,  // ← relatedAccNo = null (not a transfer)
-                    conn
-                );
+                accNo, 
+                "deposit", 
+                amount, 
+                newBalance,
+                "Cash Deposit: " + (remarks != null ? remarks : "No remarks"),
+                null, 
+                conn
+            );
 
             conn.commit();
-            request.setAttribute("success", "✅ Deposit successful! ₹" + amount + " added to your account.");
+
+            // ✅ Success: Flash message + redirect
+            session.setAttribute("flash_success", "✅ Deposit successful! ₹" + String.format("%.2f", amount) + " added to your account.");
 
         } catch (Exception e) {
             if (conn != null) {
@@ -102,7 +111,7 @@ public class DepositServlet extends HttpServlet {
                 }
             }
             e.printStackTrace();
-            request.setAttribute("error", "❌ Deposit failed: " + e.getMessage());
+            session.setAttribute("flash_error", "❌ Deposit failed: " + e.getMessage());
         } finally {
             if (conn != null) {
                 try {
@@ -114,7 +123,7 @@ public class DepositServlet extends HttpServlet {
             }
         }
 
-        // Reload form
-        doGet(request, response);
+        // ✅ Redirect to dashboard
+        response.sendRedirect("dashboard");
     }
 }

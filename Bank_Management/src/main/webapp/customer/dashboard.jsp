@@ -4,6 +4,15 @@
 <%@ page import="com.tss.model.Account"%>
 <%@ page import="java.util.List"%>
 <%
+    // Get flash messages from session
+    String flashSuccess = (String) session.getAttribute("flash_success");
+    String flashError = (String) session.getAttribute("flash_error");
+
+    // Clear them so they don't show again
+    session.removeAttribute("flash_success");
+    session.removeAttribute("flash_error");
+%>
+<%
     // Check if user is logged in
     Object userObj = session.getAttribute("user");
     if (userObj == null) {
@@ -127,11 +136,26 @@
 
         <div class="col-md-10">
             <div class="main-content p-4">
+             
                 <!-- Welcome Section -->
-                <div class="welcome-box">
-                    <h2>Welcome back, <%= customer.getName() %>! 👋</h2>
-                    <small>Here's your banking overview</small>
-                </div>
+<div class="welcome-box">
+    <h2>Welcome back, <%= customer.getName() %>! 👋</h2>
+    <small>Here's your banking overview</small>
+</div>
+
+<!-- Flash Messages -->
+<% if (flashSuccess != null) { %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle"></i> <%= flashSuccess %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% } %>
+<% if (flashError != null) { %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-circle"></i> <%= flashError %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% } %>
 
                 <!-- Statistics Cards -->
                 <div class="row mb-4">

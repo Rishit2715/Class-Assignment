@@ -37,9 +37,11 @@ public class WithdrawServlet extends HttpServlet {
             request.setAttribute("accounts", accounts);
         } catch (SQLException e) {
             e.printStackTrace();
-            request.setAttribute("error", "Failed to load accounts.");
+            // Store in session for dashboard
+            session.setAttribute("flash_error", "Failed to load accounts.");
         }
 
+        // Forward to modal form (called from dashboard)
         request.getRequestDispatcher("/customer/dashboard.jsp").forward(request, response);
     }
 
@@ -55,7 +57,14 @@ public class WithdrawServlet extends HttpServlet {
         }
 
         String accNo = request.getParameter("accNo");
-        double amount = Double.parseDouble(request.getParameter("amount"));
+        double amount;
+        try {
+            amount = Double.parseDouble(request.getParameter("amount"));
+        } catch (NumberFormatException e) {
+            session.setAttribute("flash_error", "Invalid amount entered.");
+            response.sendRedirect("dashboard");
+            return;
+        }
         String remarks = request.getParameter("remarks");
 
         Connection conn = null;
@@ -74,7 +83,7 @@ public class WithdrawServlet extends HttpServlet {
 
             // Prevent overdraft
             if (currentBalance < amount) {
-                throw new IllegalArgumentException("Insufficient balance. Available: ₹" + currentBalance);
+                throw new IllegalArgumentException("Insufficient balance. Available: ₹" + String.format("%.2f", currentBalance));
             }
 
             // New balance
@@ -84,19 +93,20 @@ public class WithdrawServlet extends HttpServlet {
             accountDAO.updateBalance(accNo, newBalance, conn);
 
             // Log transaction
-         // In WithdrawServlet.java → doPost()
             transactionDAO.insertTransaction(
                 accNo, 
                 "withdraw", 
                 amount, 
                 newBalance,
                 "Cash Withdrawal: " + (remarks != null ? remarks : "No remarks"),
-                null,  // ← relatedAccNo is null for withdraw
+                null, 
                 conn
             );
 
             conn.commit();
-            request.setAttribute("success", "✅ Withdrawal successful! ₹" + amount + " withdrawn.");
+
+            // ✅ Success: Use session flash + redirect
+            session.setAttribute("flash_success", "✅ Withdrawal successful! ₹" + String.format("%.2f", amount) + " withdrawn.");
 
         } catch (Exception e) {
             if (conn != null) {
@@ -107,7 +117,7 @@ public class WithdrawServlet extends HttpServlet {
                 }
             }
             e.printStackTrace();
-            request.setAttribute("error", "❌ Withdrawal failed: " + e.getMessage());
+            session.setAttribute("flash_error", "❌ Withdrawal failed: " + e.getMessage());
         } finally {
             if (conn != null) {
                 try {
@@ -119,7 +129,7 @@ public class WithdrawServlet extends HttpServlet {
             }
         }
 
-        // Reload form
-        doGet(request, response);
+        // ✅ Redirect (not forward) to preserve messages
+        response.sendRedirect("dashboard");
     }
 }
